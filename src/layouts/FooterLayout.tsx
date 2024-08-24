@@ -10,10 +10,7 @@ const FooterLayout = () => {
         style={{ backgroundColor: "#5DB329" }}
       >
         <div className="grid grid-cols-3">
-          <div
-            className="grid grid-rows-2"
-            onClick={() => navigate("/user")}
-          >
+          <div className="grid grid-rows-2" onClick={() => navigate("/user")}>
             <HiHome className="m-auto size-8 text-white" />
             <p className="text-[12px] justify-self-center text-white">
               Beranda

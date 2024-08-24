@@ -1,6 +1,6 @@
 import { Avatar } from "@chakra-ui/react";
 import { HiLocationMarker } from "react-icons/hi";
-import NavbarFrawer from "./NavbarFrawer";
+import NavbarDrawer from "./NavbarDrawer";
 import { useNavigate } from "react-router-dom";
 
 export const NavbarLayout = () => {
@@ -9,7 +9,7 @@ export const NavbarLayout = () => {
     <>
       <nav className="border-gray-200" style={{ backgroundColor: "#5DB329" }}>
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2">
-          <NavbarFrawer />
+          <NavbarDrawer />
 
           <a
             href="https://flowbite.com/"

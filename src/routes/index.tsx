@@ -18,6 +18,8 @@ import ProductUser from "../pages/user/item";
 import ChatRoomUser from "../pages/user/chat_room";
 import AllChatUser from "../pages/user/all_chat";
 import ProfilesUser from "../pages/user/profiles";
+import HomepagesMrc from "../pages/merchant/homepages";
+import HistoryUser from "../pages/user/history";
 
 export const router = createBrowserRouter([
   // start Screen
@@ -95,6 +97,18 @@ export const router = createBrowserRouter([
   {
     path: "/user/chat/:id",
     element: <ChatRoomUser />,
+    errorElement: <ErrorPages />,
+  },
+  {
+    path: "/user/history",
+    element: <HistoryUser />,
+    errorElement: <ErrorPages />,
+  },
+
+  // Merchant Pages
+  {
+    path: "/merchant",
+    element: <HomepagesMrc />,
     errorElement: <ErrorPages />,
   },
 ]);

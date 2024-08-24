@@ -71,7 +71,7 @@ const Index = () => {
           </ButtonGroup>
         </div>
 
-        <div className="overflow-y-scroll h-[50rem] mt-2 mb-10">
+        <div className="overflow-y-scroll h-[28rem] mt-2 mb-10">
           <div className="grid grid-cols-2 gap-4">
             <CardProduct />
             <CardProduct />

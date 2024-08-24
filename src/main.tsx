@@ -4,6 +4,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/index.tsx";
 import "./index.css";
+import "react-chat-elements/dist/main.css"
 
 const colors = {
   brand: {

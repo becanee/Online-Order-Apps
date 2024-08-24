@@ -90,7 +90,7 @@ const SignInMrc = () => {
               bgColor={["#5DB329"]}
               isLoading={false}
               loadingText="Please wait..."
-              //   onClick={onSubmit}
+              onClick={() => navigate("/merchant")}
               variant="solid"
               borderRadius={20}
             >
