@@ -14,11 +14,12 @@ import {
   HiOutlineMail,
   HiOutlineUser,
 } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import useLogic from "./_logic";
 
 const SignUpUser = () => {
-  const navigate = useNavigate();
   const [show, setShow] = useState<boolean>(false);
+  const { inputData, setInputData, handleRegister } = useLogic();
+  
   return (
     <>
       <div className="flex justify-center items-center -mt-[4rem]">
@@ -38,15 +39,14 @@ const SignUpUser = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineMail size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type="number"
               name="phone_number"
               disabled={false}
-              // onChange={(e) =>
-              //   setInputData({ ...inputData, phone_number: e.target.value })
-              // }
+              onChange={(e) =>
+                setInputData({ ...inputData, phone_number: e.target.value })
+              }
               placeholder="081xxxx"
             />
           </InputGroup>
@@ -54,15 +54,14 @@ const SignUpUser = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineUser size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type="text"
               name="username"
               disabled={false}
-              // onChange={(e) =>
-              //   setInputData({ ...inputData, username: e.target.value })
-              // }
+              onChange={(e) =>
+                setInputData({ ...inputData, username: e.target.value })
+              }
               placeholder="Nama Pengguna"
             />
           </InputGroup>
@@ -70,15 +69,14 @@ const SignUpUser = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineLockClosed size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type={show ? "text" : "password"}
               name="password"
               disabled={false}
-              // onChange={(e) =>
-              //   setInputData({ ...inputData, password: e.target.value })
-              // }
+              onChange={(e) =>
+                setInputData({ ...inputData, password: e.target.value })
+              }
               placeholder="Kata Sandi"
             />
             <InputRightElement width="4.5rem">
@@ -101,7 +99,8 @@ const SignUpUser = () => {
               bgColor={["#5DB329"]}
               isLoading={false}
               loadingText="Please wait..."
-              onClick={() => navigate("/user/success-register")}
+              onClick={handleRegister}
+              // onClick={() => navigate("/user/success-register")}
               variant="solid"
               borderRadius={20}
             >

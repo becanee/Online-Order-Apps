@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+
+// Root Pages
 import ErrorPages from "../pages/ErrorPages";
 import { StartScreen } from "../pages/StartScreen";
 
@@ -18,8 +20,12 @@ import ProductUser from "../pages/user/item";
 import ChatRoomUser from "../pages/user/chat_room";
 import AllChatUser from "../pages/user/all_chat";
 import ProfilesUser from "../pages/user/profiles";
-import HomepagesMrc from "../pages/merchant/homepages";
 import HistoryUser from "../pages/user/history";
+
+// Merchant Pages
+import HomepagesMrc from "../pages/merchant/homepages";
+import AllChatMrc from "../pages/merchant/all_chat";
+import HistoryMrc from "../pages/merchant/history";
 
 export const router = createBrowserRouter([
   // start Screen
@@ -104,11 +110,21 @@ export const router = createBrowserRouter([
     element: <HistoryUser />,
     errorElement: <ErrorPages />,
   },
-
+  
   // Merchant Pages
   {
     path: "/merchant",
     element: <HomepagesMrc />,
+    errorElement: <ErrorPages />,
+  },
+  {
+    path: "/merchant/chats",
+    element: <AllChatMrc />,
+    errorElement: <ErrorPages />,
+  },
+  {
+    path: "/merchant/history",
+    element: <HistoryMrc />,
     errorElement: <ErrorPages />,
   },
 ]);

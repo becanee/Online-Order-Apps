@@ -9,15 +9,18 @@ import { NavbarLayout } from "../../../layouts/NavbarLayout";
 import FooterLayout from "../../../layouts/FooterLayout";
 import { HiOutlineSearch } from "react-icons/hi";
 import CardProduct from "./_components/CardProduct";
+import { getUserData } from "../../../utils";
 
 const Index = () => {
+  const userProfile: any = getUserData();
+
   return (
     <>
       <NavbarLayout />
 
       <div className="px-8 -mt-5">
         <div className="mt-10">
-          <p className="text-2xl font-semibold">Hai User (Pembeli) !</p>
+          <p className="text-2xl font-semibold">{userProfile?.username} !</p>
           <p className="text-lg text-muted">Mari kita cari pesanan Anda</p>
         </div>
 

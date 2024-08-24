@@ -14,10 +14,13 @@ import {
   HiOutlineUser,
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import useLogic from "./_logic";
 
 const SignInUser = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState<boolean>(false);
+  const { inputData, setInputData, handleLogin } = useLogic();
+
   return (
     <>
       <div className="flex justify-center items-center -mt-[4.5rem]">
@@ -40,15 +43,14 @@ const SignInUser = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineUser size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type="number"
               name="phone_number"
               disabled={false}
-              //   onChange={(e) =>
-              //     setInputData({ ...inputData, phone_number: e.target.value })
-              //   }
+              onChange={(e) =>
+                setInputData({ ...inputData, phone_number: e.target.value })
+              }
               placeholder="Nomor Handphone"
             />
           </InputGroup>
@@ -56,13 +58,12 @@ const SignInUser = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineLockClosed size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type={show ? "text" : "password"}
-              //   onChange={(e) =>
-              //     setInputData({ ...inputData, password: e.target.value })
-              //   }
+              onChange={(e) =>
+                setInputData({ ...inputData, password: e.target.value })
+              }
               placeholder="Kata Sandi"
             />
             <InputRightElement width="4.5rem">
@@ -89,7 +90,8 @@ const SignInUser = () => {
               bgColor={["#5DB329"]}
               isLoading={false}
               loadingText="Please wait..."
-              onClick={() => navigate("/user")}
+              onClick={handleLogin}
+              // onClick={() => navigate("/user")}
               variant="solid"
               borderRadius={20}
             >

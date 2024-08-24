@@ -1,7 +1,9 @@
 import { HiChatAlt2, HiClipboardList, HiHome } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const FooterLayout = () => {
+  const location = useLocation();
+  const { pathname } = location;
   const navigate = useNavigate();
   return (
     <>
@@ -10,7 +12,18 @@ const FooterLayout = () => {
         style={{ backgroundColor: "#5DB329" }}
       >
         <div className="grid grid-cols-3">
-          <div className="grid grid-rows-2" onClick={() => navigate("/user")}>
+          <div
+            className="grid grid-rows-2"
+            onClick={() =>
+              navigate(
+                pathname === "/merchant" ||
+                  pathname === "/merchant/chats" ||
+                  pathname === "/merchant/history"
+                  ? "/merchant"
+                  : `/user`
+              )
+            }
+          >
             <HiHome className="m-auto size-8 text-white" />
             <p className="text-[12px] justify-self-center text-white">
               Beranda
@@ -18,14 +31,30 @@ const FooterLayout = () => {
           </div>
           <div
             className="grid grid-rows-2"
-            onClick={() => navigate("/user/chats")}
+            onClick={() =>
+              navigate(
+                pathname === "/merchant" ||
+                  pathname === "/merchant/chats" ||
+                  pathname === "/merchant/history"
+                  ? "/merchant/chats"
+                  : `/user/chats`
+              )
+            }
           >
             <HiChatAlt2 className="m-auto size-8 text-white" />
             <p className="text-[12px] justify-self-center text-white">Pesan</p>
           </div>
           <div
             className="grid grid-rows-2"
-            onClick={() => navigate("/user/history")}
+            onClick={() =>
+              navigate(
+                pathname === "/merchant" ||
+                  pathname === "/merchant/chats" ||
+                  pathname === "/merchant/history"
+                  ? "/merchant/history"
+                  : `/user/history`
+              )
+            }
           >
             <HiClipboardList className="m-auto size-8 text-white" />
             <p className="text-[12px] justify-self-center text-white">
