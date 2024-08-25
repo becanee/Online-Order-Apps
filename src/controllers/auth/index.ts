@@ -29,7 +29,7 @@ export const userRegister: any = async (req: any, res: Response) => {
     } else if (checkUsername?.data[0]) {
       responseBuilder(res, false, 200, null, "username Already Registered");
     } else if (
-        checkUsername?.data?.length === 0, checkPhoneNumber?.data?.length === 0
+      (checkUsername?.data?.length === 0, checkPhoneNumber?.data?.length === 0)
     ) {
       const response: any = await supabase
         .from("users")
@@ -64,10 +64,16 @@ export const userLogin: any = async (req: any, res: Response) => {
     const findUser: any = await supabase
       .from("users")
       .select("phone_number")
-      .eq("phone_number", req.body.phone_number)
+      .eq("phone_number", payload.phone_number)
       .select();
 
     if (findUser?.data[0]) {
+      if (
+        payload?.pathname === "/merchant/sign-in" &&
+        findUser?.data[0]?.role === "user"
+      ) {
+        responseBuilder(res, false, 200, null, "Merchant Not Registered!");
+      }
       const checkPassword = findUser?.data[0]?.password;
       const bytes = CryptoJS.AES.decrypt(checkPassword, supabaseKey);
       const originalText = bytes.toString(CryptoJS.enc.Utf8);
@@ -97,6 +103,43 @@ export const userLogin: any = async (req: any, res: Response) => {
       );
     }
   } catch (error) {
-    console.log("🚀 ~ userRegister ~ error:", error);
+    console.log("🚀 ~ userLogin ~ error:", error);
+  }
+};
+
+export const userLogout: any = async (req: any, res: Response) => {
+  try {
+    const payload: any = req.body;
+
+    const findUser: any = await supabase
+      .from("users")
+      .select("phone_number")
+      .eq("phone_number", payload.phone_number)
+      .select();
+``
+    if (findUser?.data[0]) {
+      await supabase
+        .from("users")
+        .update({ is_login: false })
+        .eq("id", findUser?.data[0]?.id);
+
+      responseBuilder(
+        res,
+        true,
+        200,
+        null,
+        `Sign-out Successfully`
+      );
+    } else {
+      responseBuilder(
+        res,
+        false,
+        200,
+        null,
+        `User ${req.body.phone_number} Not Registered`
+      );
+    }
+  } catch (error) {
+    console.log("🚀 ~ userLogout ~ error:", error);
   }
 };
