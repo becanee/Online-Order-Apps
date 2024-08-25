@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
-import { getUserData } from "../utils";
+import { baseAPIUrl, getUserData } from "../utils";
 import Cookies from "js-cookie";
 
 const Index = () => {
@@ -12,7 +12,7 @@ const Index = () => {
 
   const handleLogout = async () => {
     setLoading(true);
-    const response: any = await axios.post(`http://el.local:2000/api/sign-out`, {
+    const response: any = await axios.post(`${baseAPIUrl}/api/sign-out`, {
       phone_number: userProfile?.phone_number,
     });
 

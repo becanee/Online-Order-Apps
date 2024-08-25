@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { saveLoggedUser } from "../../../utils";
+import { baseAPIUrl, saveLoggedUser } from "../../../utils";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
@@ -11,7 +11,7 @@ const Index = () => {
 
   const handleRegister = async () => {
     setLoading(true);
-    const response: any = await axios.post(`http://el.local:2000/api/sign-up`, {
+    const response: any = await axios.post(`${baseAPIUrl}/api/sign-up`, {
       ...inputData,
       role: "user",
     });
@@ -51,7 +51,7 @@ const Index = () => {
   const handleLogin = async () => {
     setLoading(true);
     const response: any = await axios.post(
-      `http://el.local:2000/api/sign-in`,
+      `${baseAPIUrl}/api/sign-in`,
       inputData
     );
 
