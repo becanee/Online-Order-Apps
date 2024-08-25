@@ -74,6 +74,12 @@ export const userLogin: any = async (req: any, res: Response) => {
       ) {
         responseBuilder(res, false, 200, null, "Merchant Not Registered!");
       }
+      if (
+        payload?.pathname === "/admin/sign-in" &&
+        findUser?.data[0]?.role !== "admin"
+      ) {
+        responseBuilder(res, false, 200, null, "Admin Not Valid!");
+      }
       const checkPassword = findUser?.data[0]?.password;
       const bytes = CryptoJS.AES.decrypt(checkPassword, supabaseKey);
       const originalText = bytes.toString(CryptoJS.enc.Utf8);
