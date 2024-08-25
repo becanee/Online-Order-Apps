@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { saveLoggedUser } from "../../../utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
 const Index = () => {
+  const location = useLocation();
+  const { pathname } = location;
   const navigate = useNavigate();
   const [inputData, setInputData] = useState<any>({});
   const [loading, setLoading] = useState<any>(false);
@@ -13,7 +15,7 @@ const Index = () => {
     setLoading(true);
     const response: any = await axios.post(`http://el.local:2000/api/sign-up`, {
       ...inputData,
-      role: "user",
+      role: "merchant",
     });
 
     if (response?.data?.status) {
@@ -30,7 +32,7 @@ const Index = () => {
       });
 
       setTimeout(() => {
-        navigate("/user/success-register");
+        navigate("/merchant/success-register");
       }, 2000);
     } else {
       toast.error(response?.data?.message, {
@@ -50,10 +52,10 @@ const Index = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    const response: any = await axios.post(
-      `http://el.local:2000/api/sign-in`,
-      inputData
-    );
+    const response: any = await axios.post(`http://el.local:2000/api/sign-in`, {
+      ...inputData,
+      pathname: pathname,
+    });
 
     if (response?.data?.status) {
       saveLoggedUser(response?.data?.data);
@@ -70,7 +72,7 @@ const Index = () => {
       });
 
       setTimeout(() => {
-        navigate("/user");
+        navigate("/merchant");
       }, 2000);
     } else {
       toast.error(response?.data?.message, {

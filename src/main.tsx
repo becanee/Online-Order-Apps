@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/index.tsx";
 import "./index.css";
 import "react-chat-elements/dist/main.css"
+import 'react-toastify/dist/ReactToastify.css';
 
 const colors = {
   brand: {
@@ -15,6 +16,7 @@ const colors = {
 };
 
 const theme = extendTheme({ colors });
+
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

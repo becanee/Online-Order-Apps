@@ -14,11 +14,13 @@ import {
   HiOutlineMail,
   HiOutlineUser,
 } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import useLogic from "./_logic";
+import { ToastContainer } from "react-toastify";
 
 const SignUpMrc = () => {
-  const navigate = useNavigate();
   const [show, setShow] = useState<boolean>(false);
+  const { inputData, setInputData, handleRegister, loading } = useLogic();
+
   return (
     <>
       <div className="flex justify-center items-center -mt-[4rem]">
@@ -38,15 +40,14 @@ const SignUpMrc = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineMail size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type="number"
               name="phone_number"
-              disabled={false}
-              // onChange={(e) =>
-              //   setInputData({ ...inputData, phone_number: e.target.value })
-              // }
+              disabled={loading}
+              onChange={(e) =>
+                setInputData({ ...inputData, phone_number: e.target.value })
+              }
               placeholder="081xxxx"
             />
           </InputGroup>
@@ -54,15 +55,14 @@ const SignUpMrc = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineUser size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type="text"
               name="username"
-              disabled={false}
-              // onChange={(e) =>
-              //   setInputData({ ...inputData, username: e.target.value })
-              // }
+              disabled={loading}
+              onChange={(e) =>
+                setInputData({ ...inputData, username: e.target.value })
+              }
               placeholder="Nama Pengguna"
             />
           </InputGroup>
@@ -70,15 +70,14 @@ const SignUpMrc = () => {
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <HiOutlineLockClosed size={24} />
-              {/* <PhoneIcon color='gray.300' /> */}
             </InputLeftElement>
             <Input
               type={show ? "text" : "password"}
               name="password"
-              disabled={false}
-              // onChange={(e) =>
-              //   setInputData({ ...inputData, password: e.target.value })
-              // }
+              disabled={loading}
+              onChange={(e) =>
+                setInputData({ ...inputData, password: e.target.value })
+              }
               placeholder="Kata Sandi"
             />
             <InputRightElement width="4.5rem">
@@ -93,15 +92,14 @@ const SignUpMrc = () => {
           </InputGroup>
 
           <div className="mt-10">
-            {/* <Button color="white" size='lg' w={300} bgColor={['#5DB329']} variant='solid' borderRadius={20} onClick={() => navigate("/merchant/success")}>Daftar</Button> */}
             <Button
               color="white"
               size="lg"
               w={300}
               bgColor={["#5DB329"]}
-              isLoading={false}
+              isLoading={loading}
               loadingText="Please wait..."
-              onClick={() => navigate("/merchant/success-register")}
+              onClick={handleRegister}
               variant="solid"
               borderRadius={20}
             >
@@ -110,6 +108,8 @@ const SignUpMrc = () => {
           </div>
         </VStack>
       </div>
+
+      <ToastContainer />
     </>
   );
 };

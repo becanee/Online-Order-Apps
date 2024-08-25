@@ -15,11 +15,12 @@ import {
   HiOutlineUser,
 } from "react-icons/hi";
 import useLogic from "./_logic";
+import { ToastContainer } from 'react-toastify';
 
 const SignUpUser = () => {
   const [show, setShow] = useState<boolean>(false);
-  const { inputData, setInputData, handleRegister } = useLogic();
-  
+  const { inputData, setInputData, handleRegister, loading } = useLogic();
+
   return (
     <>
       <div className="flex justify-center items-center -mt-[4rem]">
@@ -43,12 +44,12 @@ const SignUpUser = () => {
             <Input
               type="number"
               name="phone_number"
-              disabled={false}
+              disabled={loading}
               onChange={(e) =>
                 setInputData({ ...inputData, phone_number: e.target.value })
               }
               placeholder="081xxxx"
-            />
+              />
           </InputGroup>
 
           <InputGroup>
@@ -58,7 +59,7 @@ const SignUpUser = () => {
             <Input
               type="text"
               name="username"
-              disabled={false}
+              disabled={loading}
               onChange={(e) =>
                 setInputData({ ...inputData, username: e.target.value })
               }
@@ -73,7 +74,7 @@ const SignUpUser = () => {
             <Input
               type={show ? "text" : "password"}
               name="password"
-              disabled={false}
+              disabled={loading}
               onChange={(e) =>
                 setInputData({ ...inputData, password: e.target.value })
               }
@@ -91,16 +92,15 @@ const SignUpUser = () => {
           </InputGroup>
 
           <div className="mt-10">
-            {/* <Button color="white" size='lg' w={300} bgColor={['#5DB329']} variant='solid' borderRadius={20} onClick={() => navigate("/merchant/success")}>Daftar</Button> */}
+            {" "}
             <Button
               color="white"
               size="lg"
               w={300}
               bgColor={["#5DB329"]}
-              isLoading={false}
+              isLoading={loading}
               loadingText="Please wait..."
               onClick={handleRegister}
-              // onClick={() => navigate("/user/success-register")}
               variant="solid"
               borderRadius={20}
             >
@@ -109,6 +109,8 @@ const SignUpUser = () => {
           </div>
         </VStack>
       </div>
+
+      <ToastContainer />
     </>
   );
 };

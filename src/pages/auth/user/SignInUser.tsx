@@ -15,11 +15,12 @@ import {
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import useLogic from "./_logic";
+import { ToastContainer } from 'react-toastify';
 
 const SignInUser = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState<boolean>(false);
-  const { inputData, setInputData, handleLogin } = useLogic();
+  const { inputData, setInputData, handleLogin, loading } = useLogic();
 
   return (
     <>
@@ -47,7 +48,7 @@ const SignInUser = () => {
             <Input
               type="number"
               name="phone_number"
-              disabled={false}
+              disabled={loading}
               onChange={(e) =>
                 setInputData({ ...inputData, phone_number: e.target.value })
               }
@@ -61,6 +62,7 @@ const SignInUser = () => {
             </InputLeftElement>
             <Input
               type={show ? "text" : "password"}
+              disabled={loading}
               onChange={(e) =>
                 setInputData({ ...inputData, password: e.target.value })
               }
@@ -78,8 +80,8 @@ const SignInUser = () => {
           </InputGroup>
 
           <div className="flex justify-between pt-4 gap-24">
-            <p onClick={() => navigate("/client/sign-up")}>Daftar</p>
-            <p onClick={() => navigate("/client/sign-up")}>Lupa Password ?</p>
+            <p onClick={() => navigate("/user/sign-up")}>Daftar</p>
+            <p onClick={() => navigate("/user/sign-in")}>Lupa Password ?</p>
           </div>
 
           <div className="mt-10">
@@ -88,10 +90,9 @@ const SignInUser = () => {
               size="lg"
               w={300}
               bgColor={["#5DB329"]}
-              isLoading={false}
+              isLoading={loading}
               loadingText="Please wait..."
               onClick={handleLogin}
-              // onClick={() => navigate("/user")}
               variant="solid"
               borderRadius={20}
             >
@@ -99,6 +100,8 @@ const SignInUser = () => {
             </Button>
           </div>
         </VStack>
+
+        <ToastContainer />
       </div>
     </>
   );

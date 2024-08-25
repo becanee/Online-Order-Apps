@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 // Root Pages
 import ErrorPages from "../pages/ErrorPages";
 import { StartScreen } from "../pages/StartScreen";
+import Profiles from "../pages/profiles";
 
 // Authentication
 import StartUser from "../pages/auth/user/StartUser";
@@ -19,13 +20,13 @@ import HomepagesUser from "../pages/user/homepages";
 import ProductUser from "../pages/user/item";
 import ChatRoomUser from "../pages/user/chat_room";
 import AllChatUser from "../pages/user/all_chat";
-import ProfilesUser from "../pages/user/profiles";
 import HistoryUser from "../pages/user/history";
 
 // Merchant Pages
 import HomepagesMrc from "../pages/merchant/homepages";
 import AllChatMrc from "../pages/merchant/all_chat";
 import HistoryMrc from "../pages/merchant/history";
+import AddProductMrc from "../pages/merchant/add_product";
 
 export const router = createBrowserRouter([
   // start Screen
@@ -86,11 +87,6 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPages />,
   },
   {
-    path: "/user/profiles",
-    element: <ProfilesUser />,
-    errorElement: <ErrorPages />,
-  },
-  {
     path: "/user/product/:name",
     element: <ProductUser />,
     errorElement: <ErrorPages />,
@@ -125,6 +121,18 @@ export const router = createBrowserRouter([
   {
     path: "/merchant/history",
     element: <HistoryMrc />,
+    errorElement: <ErrorPages />,
+  },
+  {
+    path: "/merchant/add-product",
+    element: <AddProductMrc />,
+    errorElement: <ErrorPages />,
+  },
+
+  // Profile Pages
+  {
+    path: "/profiles",
+    element: <Profiles />,
     errorElement: <ErrorPages />,
   },
 ]);

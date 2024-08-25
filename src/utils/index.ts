@@ -10,12 +10,20 @@ export const saveLoggedUser = (token: string) => {
 
 export const getUserData = () => {
   const token: any = Cookies.get("_TOKEN");
-
-  if (!token) {
-    window.location.replace("/");
-  } else {
+  
+  if (token) {
     const bytes2nd = CryptoJS.AES.decrypt(token, salt);
     const data = JSON.parse(bytes2nd.toString(CryptoJS.enc.Utf8));
-    return data;
+    const refactorData: any = {
+      id: data?.id,
+      created_at: data?.created_at,
+      updated_at: data?.updated_at,
+      username: data?.username,
+      phone_number: data?.phone_number,
+      city: data?.city,
+      address: data?.address,
+      role: data?.role,
+    };
+    return refactorData;
   }
 };

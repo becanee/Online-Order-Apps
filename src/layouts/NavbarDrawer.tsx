@@ -17,6 +17,9 @@ import {
   HiOutlineUser,
 } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
+import useLogic from "./_logic";
+import { ToastContainer } from "react-toastify";
+import { getUserData } from "../utils";
 
 const NavbarDrawer = () => {
   const location = useLocation();
@@ -24,6 +27,9 @@ const NavbarDrawer = () => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef: any = React.useRef();
+  const userProfile: any = getUserData();
+  const { handleLogout, loading } = useLogic();
+
   return (
     <>
       <button
@@ -65,7 +71,7 @@ const NavbarDrawer = () => {
               name="Dan Abrahmov"
               src="https://bit.ly/dan-abramov"
             />
-            {pathname === "/merchant" ? "Mrc (Penjual)" : "User (Pembeli)"}
+            {userProfile?.username}
           </DrawerHeader>
 
           <DrawerBody>
@@ -74,7 +80,7 @@ const NavbarDrawer = () => {
                 <div className="grid grid-rows-2 gap-1 mt-64">
                   <div
                     className="flex justify-normal items-center"
-                    onClick={() => navigate("/user/profiles")}
+                    onClick={() => navigate("/profiles")}
                   >
                     <HiOutlineUser className="size-6 mr-3" />
                     <p className="text-xl font-semibold">Profil Settings</p>
@@ -83,7 +89,7 @@ const NavbarDrawer = () => {
                 <div className="grid grid-rows-2 gap-1 -mt-5">
                   <div
                     className="flex justify-normal items-center"
-                    onClick={() => navigate("/merchant")}
+                    onClick={() => navigate("/merchant/add-product")}
                   >
                     <HiOutlinePlusCircle className="size-6 mr-3" />
                     <p className="text-xl font-semibold">Add Product</p>
@@ -94,7 +100,7 @@ const NavbarDrawer = () => {
               <div className="grid grid-rows-2 gap-1 mt-64">
                 <div
                   className="flex justify-normal items-center"
-                  onClick={() => navigate("/user/profiles")}
+                  onClick={() => navigate("/profiles")}
                 >
                   <HiOutlineUser className="size-6 mr-3" />
                   <p className="text-xl font-semibold">Profil Settings</p>
@@ -104,13 +110,15 @@ const NavbarDrawer = () => {
           </DrawerBody>
 
           <DrawerFooter>
-            <Button size="sm" colorScheme="red" onClick={() => navigate("/")}>
+            <Button size="sm" colorScheme="red" onClick={handleLogout} isLoading={loading}>
               <HiOutlineReply className="size-4 mr-3" />
               Logout
             </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+
+      <ToastContainer />
     </>
   );
 };

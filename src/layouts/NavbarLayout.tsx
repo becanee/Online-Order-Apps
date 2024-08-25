@@ -12,8 +12,8 @@ export const NavbarLayout = () => {
           <NavbarDrawer />
 
           <a
-            href="https://flowbite.com/"
-            className="flex justify-center items-center"
+            href="/"
+            className="flex justify-center items-center -ml-[7rem]"
           >
             <HiLocationMarker className="text-white size-6 m-auto mr-2" />
             <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
@@ -22,7 +22,7 @@ export const NavbarLayout = () => {
           </a>
           <div
             className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
-            onClick={() => navigate("/user/profiles")}
+            onClick={() => navigate("/profiles")}
           >
             <Avatar
               size="sm"

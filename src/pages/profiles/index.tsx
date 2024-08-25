@@ -1,7 +1,7 @@
 import Content from "./Content";
 
-const ProfilesUser = () => {
+const Profiles = () => {
   return <Content />;
 };
 
-export default ProfilesUser;
+export default Profiles;
