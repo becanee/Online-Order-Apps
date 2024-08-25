@@ -4,7 +4,6 @@ import {
   FormLabel,
   Image,
   Input,
-  Select,
   VStack,
 } from "@chakra-ui/react";
 
@@ -59,13 +58,13 @@ const Content = () => {
               boxShadow="md"
             />
           </FormControl>
-          <FormControl>
+          {/* <FormControl>
             <FormLabel>Kota</FormLabel>
             <Select disabled borderRadius={15} boxShadow="md">
               <option>Bandung</option>
               <option>Kepo</option>
             </Select>
-          </FormControl>
+          </FormControl> */}
           <FormControl>
             <FormLabel>Alamat</FormLabel>
             <Input

@@ -27,12 +27,21 @@ import HomepagesMrc from "../pages/merchant/homepages";
 import AllChatMrc from "../pages/merchant/all_chat";
 import HistoryMrc from "../pages/merchant/history";
 import AddProductMrc from "../pages/merchant/add_product";
+import AdminSettings from "../pages/admin";
+import SignInAdmin from "../pages/auth/admin/SignInAdmin";
 
 export const router = createBrowserRouter([
   // start Screen
   {
     path: "/",
     element: <StartScreen />,
+    errorElement: <ErrorPages />,
+  },
+
+  // Authentication Admin
+  {
+    path: "/admin/sign-in",
+    element: <SignInAdmin />,
     errorElement: <ErrorPages />,
   },
 
@@ -133,6 +142,13 @@ export const router = createBrowserRouter([
   {
     path: "/profiles",
     element: <Profiles />,
+    errorElement: <ErrorPages />,
+  },
+
+  // Admin Settings Pages
+  {
+    path: "/admin",
+    element: <AdminSettings />,
     errorElement: <ErrorPages />,
   },
 ]);
