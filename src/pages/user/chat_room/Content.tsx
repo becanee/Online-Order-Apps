@@ -65,13 +65,13 @@ const Content = () => {
     getMessageByChatID(id);
     getChatByID(id);
 
-    // setInterval(() => {
+    setInterval(() => {
     getMessageByChatID(id);
-    // }, 3000);
+    }, 2000);
 
-    // setInterval(() => {
-    //   navigate(0)
-    // }, 30000);
+    setInterval(() => {
+      navigate(0)
+    }, 30000);
   }, [id, datas?.order?.product_id, messages?.length]);
   return (
     <>
