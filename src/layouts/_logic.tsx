@@ -31,6 +31,7 @@ const Index = () => {
 
       setTimeout(() => {
         Cookies.remove("_TOKEN");
+        Cookies.remove("_TOKEN");
         navigate("/");
       }, 2000);
     } else {

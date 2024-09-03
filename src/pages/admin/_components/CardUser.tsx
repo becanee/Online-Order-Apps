@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import ModalUser from "./ModalUser";
 
-const CardUser = ({ data }: any) => {
+const CardUser = ({ data, handleProductStatus }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -32,7 +32,7 @@ const CardUser = ({ data }: any) => {
         </CardHeader>
       </Card>
 
-      <ModalUser isOpen={isOpen} data={data} onClose={onClose} />
+      <ModalUser handleProductStatus={handleProductStatus} isOpen={isOpen} data={data} onClose={onClose} />
     </>
   );
 };

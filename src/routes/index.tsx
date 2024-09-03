@@ -29,6 +29,7 @@ import HistoryMrc from "../pages/merchant/history";
 import AddProductMrc from "../pages/merchant/add_product";
 import AdminSettings from "../pages/admin";
 import SignInAdmin from "../pages/auth/admin/SignInAdmin";
+import ChatRoomMrc from "../pages/merchant/chat_room";
 
 export const router = createBrowserRouter([
   // start Screen
@@ -96,7 +97,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPages />,
   },
   {
-    path: "/user/product/:name",
+    path: "/user/product/:id",
     element: <ProductUser />,
     errorElement: <ErrorPages />,
   },
@@ -125,6 +126,11 @@ export const router = createBrowserRouter([
   {
     path: "/merchant/chats",
     element: <AllChatMrc />,
+    errorElement: <ErrorPages />,
+  },
+  {
+    path: "/merchant/chat/:id",
+    element: <ChatRoomMrc />,
     errorElement: <ErrorPages />,
   },
   {

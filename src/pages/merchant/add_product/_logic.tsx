@@ -37,16 +37,26 @@ const Index = () => {
     setLoading(false);
   };
 
-  const handleAddProducts = async () => {
+  const handleAddProducts = async (status?: any) => {
     setLoading(true);
 
     let formData: any = new FormData();
-    formData.append("file", file2nd);
-    formData.append("mrc_id", userProfile?.id);
-    formData.append("name", inputData?.name);
-    formData.append("type", inputData?.type);
-    formData.append("desc", inputData?.desc);
-    formData.append("price", inputData?.price);
+    if (file2nd) {
+      formData.append("file", file2nd);
+    }
+    if (datas?.name && datas?.price) {
+      formData.append("product_id", datas?.id);
+    } else {
+      formData.append("mrc_id", userProfile?.id);
+    }
+    formData.append("status", status ? status : datas?.status);
+    formData.append("name", inputData?.name ? inputData?.name : datas?.name);
+    formData.append("type", inputData?.type ? inputData?.type : datas?.type);
+    formData.append("desc", inputData?.desc ? inputData?.desc : datas?.desc);
+    formData.append(
+      "price",
+      inputData?.price ? inputData?.price : datas?.price
+    );
 
     const response: any = await axios.post(
       `${baseAPIUrl}/api/product/add`,
@@ -54,7 +64,7 @@ const Index = () => {
     );
 
     if (response?.data?.status) {
-      toast.success(`Add Product Successfully`, {
+      toast.success(`Save Product Successfully`, {
         position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: false,

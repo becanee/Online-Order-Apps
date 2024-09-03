@@ -13,7 +13,7 @@ import useLogic from "./_logic";
 
 const Index = () => {
   const userProfile: any = getUserData();
-  const { getUsersByRole, loading, userdatas } = useLogic();
+  const { getUsersByRole, handleProductStatus, loading, userdatas } = useLogic();
 
   return (
     <>
@@ -51,7 +51,7 @@ const Index = () => {
                   </>
                 ) : (
                   userdatas.map((item: any, key: any) => {
-                    return <CardUser key={key} data={item} />;
+                    return <CardUser handleProductStatus={handleProductStatus} key={key} data={item} />;
                   })
                 )}
               </div>
@@ -69,7 +69,7 @@ const Index = () => {
                   </>
                 ) : (
                   userdatas.map((item: any, key: any) => {
-                    return <CardUser key={key} data={item} />;
+                    return <CardUser handleProductStatus={handleProductStatus} key={key} data={item} />;
                   })
                 )}
               </div>

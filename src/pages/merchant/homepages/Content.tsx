@@ -1,12 +1,6 @@
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Skeleton,
-} from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
 import { NavbarLayout } from "../../../layouts/NavbarLayout";
 import FooterLayout from "../../../layouts/FooterLayout";
-import { HiOutlineSearch } from "react-icons/hi";
 import CardProduct from "./_components/CardProduct";
 import { getUserData } from "../../../utils";
 import useLogic from "./_logic";
@@ -28,19 +22,6 @@ const Index = () => {
           </p>
           <p className="text-lg text-muted">Mari tingkatkan penjualan Anda</p>
         </div>
-
-        <InputGroup className="mt-10">
-          <InputLeftElement pointerEvents="none">
-            <HiOutlineSearch size={20} />
-          </InputLeftElement>
-          <Input
-            type="text"
-            placeholder="Cari kebutuhan mu!"
-            borderRadius={15}
-            boxShadow="md"
-            // onChange={(e) => handleSearch(e.target.value)}
-          />
-        </InputGroup>
 
         <div className="overflow-y-scroll h-[28rem] mt-2 mb-10">
           {datas?.status === "pending" ? (
@@ -65,9 +46,9 @@ const Index = () => {
           ) : null}
 
           {datas?.id ? (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {loading ? (
-                <Skeleton mt={3} height="170px" />
+                <Skeleton mt={3} height="270px" />
               ) : (
                 <CardProduct datas={datas} />
               )}

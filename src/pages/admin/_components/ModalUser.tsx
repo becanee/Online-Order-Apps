@@ -15,7 +15,7 @@ import {
 import useLogic from "../_logic";
 import { useEffect } from "react";
 
-const ModalUser = ({ isOpen, onClose, data }: any) => {
+const ModalUser = ({ isOpen, onClose, handleProductStatus, data }: any) => {
   const { getProductByMrcID, loading, productdata } = useLogic();
 
   useEffect(() => {
@@ -80,9 +80,9 @@ const ModalUser = ({ isOpen, onClose, data }: any) => {
                   <FormLabel>Harga</FormLabel>
                   <Input
                     disabled
-                    defaultValue={`Rp ${productdata?.price?.toLocaleString(
-                      "id"
-                    )}`}
+                    defaultValue={`Rp ${parseInt(
+                      productdata?.price
+                    )?.toLocaleString("id")}`}
                   />
                 </FormControl>
 
@@ -101,13 +101,30 @@ const ModalUser = ({ isOpen, onClose, data }: any) => {
                     <Button
                       colorScheme="red"
                       size="sm"
-                      onClick={onClose}
+                      onClick={() => {
+                        handleProductStatus({
+                          product_id: productdata?.id,
+                          status: "tolak",
+                        });
+                        onClose();
+                      }}
                       mr={3}
                       isLoading={loading}
                     >
                       Decline
                     </Button>
-                    <Button colorScheme="green" size="sm" isLoading={loading}>
+                    <Button
+                      colorScheme="green"
+                      size="sm"
+                      onClick={() => {
+                        handleProductStatus({
+                          product_id: productdata?.id,
+                          status: "live",
+                        });
+                        onClose();
+                      }}
+                      isLoading={loading}
+                    >
                       Approve
                     </Button>
                   </>
@@ -117,12 +134,12 @@ const ModalUser = ({ isOpen, onClose, data }: any) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={onClose} mr={3} isLoading={loading}>
-              Cancel
+            <Button onClick={onClose} mr={0} isLoading={loading}>
+              Close
             </Button>
-            <Button colorScheme="blue" isLoading={loading}>
+            {/* <Button colorScheme="blue" isLoading={loading}>
               Save
-            </Button>
+            </Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -35,7 +35,13 @@ const Content = () => {
       <div className="container px-4">
         {datas?.id ? (
           <div
-            className="flex p-4 mb-4 mt-4 text-sm text-blue-800 rounded-lg bg-blue-200"
+            className={`flex p-4 mb-4 mt-4 text-sm rounded-lg ${
+              datas?.status === "pending"
+                ? "text-yellow-800 bg-yellow-200"
+                : datas?.status === "live"
+                ? "text-green-800 bg-green-200"
+                : "text-red-800 bg-red-200"
+            }`}
             role="alert"
           >
             <svg
@@ -59,6 +65,16 @@ const Content = () => {
                   {datas?.sold}
                 </li>
               </ul>
+
+              {datas?.status === "live" ? (
+                <Button w="full" className="mt-2" onClick={() => handleAddProducts('libur')} colorScheme="red" size="sm">
+                  Libur
+                </Button>
+              ) : datas?.status === "libur" ? (
+                <Button w="full" className="mt-2" onClick={() => handleAddProducts('live')} colorScheme="whatsapp" size="sm">
+                  Buka
+                </Button>
+              ) : null}
             </div>
           </div>
         ) : null}
@@ -88,6 +104,7 @@ const Content = () => {
               type="file"
               variant="unstyled"
               opacity={100}
+              disabled={loading || datas?.status === "pending"}
               onChange={handleChange}
             />
           </FormControl>
@@ -95,7 +112,7 @@ const Content = () => {
             <FormLabel>Nama Produk/Jasa</FormLabel>
             <Input
               type="text"
-              disabled={loading}
+              disabled={loading || datas?.status === "pending"}
               borderRadius={15}
               onChange={(e) =>
                 setInputData({ ...inputData, name: e.target.value })
@@ -108,7 +125,7 @@ const Content = () => {
             <FormLabel>Harga</FormLabel>
             <Input
               type="number"
-              disabled={loading}
+              disabled={loading|| datas?.status === "pending"}
               borderRadius={15}
               onChange={(e) =>
                 setInputData({ ...inputData, price: +e.target.value })
@@ -121,7 +138,7 @@ const Content = () => {
             <FormLabel>Kategori</FormLabel>
             <Select
               placeholder="Pilih Kategori"
-              disabled={loading}
+              disabled={loading|| datas?.status === "pending"}
               onChange={(e) =>
                 setInputData({ ...inputData, type: e.target.value })
               }
@@ -137,7 +154,7 @@ const Content = () => {
             <FormLabel>Deskripsi</FormLabel>
             <Input
               type="text"
-              disabled={loading}
+              disabled={loading|| datas?.status === "pending"}
               borderRadius={15}
               onChange={(e) =>
                 setInputData({ ...inputData, desc: e.target.value })
@@ -155,6 +172,7 @@ const Content = () => {
               bgColor={["#5DB329"]}
               variant="solid"
               borderRadius={20}
+              isDisabled={loading || datas?.status === "pending"}
               isLoading={loading}
               loadingText="Please wait..."
               onClick={handleAddProducts}

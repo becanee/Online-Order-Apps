@@ -40,7 +40,7 @@ const Content = () => {
     sendMessageUser,
     setInputData,
     getMessageByChatID,
-    createOrderByID,
+    updateOrderByID,
     inputData,
     datas,
     product,
@@ -53,25 +53,27 @@ const Content = () => {
     await sendMessageUser(datas);
   };
 
-  const handleCreateOrder = async () => {
-    await createOrderByID(datas);
+  const handleUpdateOrder = async (status: any) => {
+    await updateOrderByID({ datas: datas, status: status });
+    getMessageByChatID(datas?.id);
   };
 
   useEffect(() => {
     if (datas?.product?.id) {
       getProductByID(datas?.product?.id);
     }
-
+    
     getMessageByChatID(id);
     getChatByID(id);
-
+    
     // setInterval(() => {
-    getMessageByChatID(id);
+      getMessageByChatID(id);
     // }, 3000);
 
     // setInterval(() => {
     //   navigate(0)
     // }, 30000);
+
   }, [id, datas?.order?.product_id, messages?.length]);
   return (
     <>
@@ -86,7 +88,7 @@ const Content = () => {
             colorScheme="transparant"
             aria-label="Search database"
             icon={<HiMenu className="size-8 m-auto" />}
-            onClick={() => navigate("/user/chats")}
+            onClick={() => navigate("/merchant/chats")}
           />
           <HiOutlineArrowNarrowLeft
             size={20}
@@ -95,20 +97,20 @@ const Content = () => {
           />
           <Avatar
             size="sm"
-            name={datas?.merchant?.username}
+            name={datas?.buyer?.username}
             className="mt-2"
-            src={datas?.merchant?.avatar}
+            src={datas?.buyer?.avatar}
           />
           <div className="flex gap-1 ml-3 mt-1 text-black">
             <p className="text-1xl mt-2 font-semibold m-auto">
-              {datas?.merchant?.username}
+              {datas?.buyer?.username}
             </p>
           </div>
         </div>
         <HiOutlinePhone
           size={20}
           color="black"
-          onClick={() => window.open(`tel:${datas?.merchant?.phone_number}`)}
+          onClick={() => window.open(`tel:${datas?.buyer?.phone_number}`)}
           className="mt-2"
         />
       </Box>
@@ -116,9 +118,9 @@ const Content = () => {
       <div className="h-screen overflow-y-auto overflow-x-hidden max-h-[47.5rem]">
         <SystemMessage
           {...SystemMessageProps}
-          className="mt-2 mb-2 text-yellow-500 text-md"
+          className="mt-2 mb-2"
           text={
-            "Hati-hati penipuan! Mohon tidak bertransaksi bila merchant belum bertemu dengan anda. Tetap bertransaksi melalui aplikasi kami ya."
+            "Hati-hati penipuan! Mohon tidak bertransaksi bila merchant belum bertemu dengan anda dan tidak memberikan data pribadi kepada merchant. Tetap bertransaksi melalui aplikasi kami ya."
           }
         />
 
@@ -145,13 +147,13 @@ const Content = () => {
                       dateString={new Date().toDateString}
                       collapseTitle={
                         item?.order?.status === "pending"
-                          ? `Menunggu respon merchant`
+                          ? `Detail Pesanan`
                           : item?.order?.status === "proses"
-                          ? `Merchant sedang proses pesanan kamu`
+                          ? `Detail Pesanan`
                           : item?.order?.status === "selesai"
-                          ? `Pesananmu sudah selesai`
+                          ? `Detail Pesanan`
                           : item?.order?.status === "batal"
-                          ? `Pesanan dibatalkan`
+                          ? `Detail Pesanan`
                           : null
                       }
                       participants={[
@@ -163,7 +165,8 @@ const Content = () => {
                       dataSource={[
                         {
                           id: "1",
-                          avatar: item?.product?.picture,
+                          avatar:
+                            "https://as1.ftcdn.net/v2/jpg/03/87/42/46/1000_F_387424650_YqJr0ffJMK40D8098nbNa7rmh0wNlzM9.jpg",
                           message: `Rp ${item?.order?.price?.toLocaleString(
                             "id"
                           )}`,
@@ -181,7 +184,7 @@ const Content = () => {
                     {...messageBoxProps}
                     key={key}
                     className="mt-2"
-                    position={item?.position}
+                    position={item?.sender === "user" ? "left" : "right"}
                     title={item?.title}
                     type={item?.type}
                     src={item?.src}
@@ -226,11 +229,50 @@ const Content = () => {
         </InputGroup>
 
         <Button
+          hidden={!datas?.order?.status}
           w="full"
           className="mt-2"
           colorScheme={
             datas?.order?.status == "pending"
+              ? "whatsapp"
+              : datas?.order?.status == "proses"
               ? "yellow"
+              : "default"
+          }
+          size="sm"
+          isLoading={loading}
+          isDisabled={!product?.id}
+          onClick={onOpen}
+        >
+          {datas?.order?.status == "pending"
+            ? "Terima Pesanan"
+            : datas?.order?.status == "proses"
+            ? "Selesaikan Pesanan"
+            : datas?.order?.status == "pending"
+            ? "Terima Pesanan"
+            : null}
+        </Button>
+
+        <Button
+          hidden={datas?.order?.status !== "pending"}
+          w="full"
+          className="mt-2"
+          colorScheme={"red"}
+          size="sm"
+          isLoading={loading}
+          isDisabled={!product?.id}
+          onClick={() => handleUpdateOrder("batal")}
+        >
+          {"Tolak Pesanan"}
+        </Button>
+
+        {/* <Button
+          hidden
+          w="full"
+          className="mt-2"
+          colorScheme={
+            datas?.order?.status == "pending"
+              ? "whatsapp"
               : datas?.order?.status == "proses"
               ? "telegram"
               : datas?.order?.status == "selesai"
@@ -241,28 +283,28 @@ const Content = () => {
           isLoading={loading}
           isDisabled={
             !product?.id ||
-            datas?.order?.status === "pending" ||
-            datas?.order?.status === "proses"
+            datas?.order?.status == "pending" ||
+            datas?.order?.status == "proses"
           }
           onClick={onOpen}
         >
           {datas?.order?.status == "pending"
-            ? "Menunggu Respon Merchant"
+            ? "Terima Pesanan"
             : datas?.order?.status == "proses"
-            ? "Pesanan Diproses Merchant"
+            ? "Selesaikan Pesanan"
             : datas?.order?.status == "selesai"
             ? "Pesan Lagi"
-            : datas?.order?.status == "batal"
-            ? "Order"
             : "Order"}
-        </Button>
+        </Button> */}
       </footer>
 
       <ModalOrder
         isOpen={isOpen}
         data={product}
+        order={datas?.order}
+        pembeli={datas?.buyer}
         onClose={onClose}
-        handleOrder={handleCreateOrder}
+        handleOrder={handleUpdateOrder}
       />
     </>
   );

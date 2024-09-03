@@ -1,10 +1,12 @@
 import { ChatList, IChatListProps } from "react-chat-elements";
 import FooterLayout from "../../../layouts/FooterLayout";
 import { useNavigate } from "react-router-dom";
+import useLogic from "./_logic";
+import { Skeleton } from "@chakra-ui/react";
 
 const chatListProps: IChatListProps = {
-  id: "unique-chat-list-id", // Replace with an appropriate value
-  lazyLoadingImage: "path/to/lazy-loading-image.jpg", // Replace with an appropriate value
+  id: "unique-chat-list-id",
+  lazyLoadingImage: "path/to/lazy-loading-image.jpg",
   className: "your-class-name",
   dataSource: [
     {
@@ -16,16 +18,34 @@ const chatListProps: IChatListProps = {
       date: new Date(),
       unread: 5,
     },
-    // Add more chat items as needed
   ],
 };
 
 const Content = () => {
   const navigate = useNavigate();
+  const { loading, datas } = useLogic();
+  console.log("🚀 ~ Content ~ datas:", datas)
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-1">
-        <ChatList {...chatListProps} onClick={() => navigate("/user/chat/n931f9813fh9831f9")} />
+        {loading ? <>
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+          <Skeleton mt={3} height="80px" mx={2} />
+        </> : (
+          <ChatList
+            {...chatListProps}
+            dataSource={datas}
+            onClick={(e: any) => navigate(`/merchant/chat/${e?.id}`)}
+          />
+        )}
       </div>
 
       <FooterLayout />

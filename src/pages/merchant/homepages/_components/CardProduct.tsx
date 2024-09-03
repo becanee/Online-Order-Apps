@@ -8,7 +8,7 @@ const CardProduct = ({ datas }: any) => {
     <>
       <Card
         borderRadius={20}
-        className="grid h-[11rem] w-full max-w-[11rem] items-end justify-center overflow-hidden text-center mt-2"
+        className="grid h-[20rem] w-full max-w-full items-end justify-center overflow-hidden text-center mt-2"
         onClick={() => navigate("/merchant/add-product")}
       >
         <CardHeader
@@ -24,27 +24,37 @@ const CardProduct = ({ datas }: any) => {
             className="absolute inset-0 m-0 h-full w-full rounded-none"
           />
         </CardHeader>
-        <CardBody className="m-auto py-14 px-6">
-          <Text className="relative text-white text-2xl mt-11">
+        <CardBody className="m-auto flex justify-between py-14 px-0">
+          <Text className="relative text-white text-2xl mt-32">
             {datas?.name}
           </Text>
-          <div className="flex items-stretch ">
+          <div className="flex">
             <p className="text-white self-start absolute bottom-6 left-2 text-[10px]">
               Mulai Dari
             </p>
             <p className="text-white self-start absolute bottom-2 left-2 text-[14px]">
               Rp. {datas?.price?.toLocaleString("id")}
             </p>
-
-            <span
-              className={`relative ${
-                datas?.status === "pending"
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-green-200 text-green-900"
-              } text-xs font-medium me-2 px-2.5 py-0.5 rounded top-12 left-24 -ml-5 text-[14px]`}
+            {/* <div
+              className={`text-md font-lg text-red rounded top-0 text-[14px]`}
             >
               {datas?.status?.toUpperCase()}
-            </span>
+            </div> */}
+          </div>
+          <div className="flex justify-end">
+            <p
+              className={`text-white self-start absolute bottom-3 right-4 rounded-lg ${
+                datas.status === "pending"
+                  ? "p-1 bg-yellow-500"
+                  : datas.status === "live"
+                  ? "p-1 bg-green-500"
+                  : datas.status === "libur"
+                  ? "p-1 bg-red-500"
+                  : null
+              } text-[14px]`}
+            >
+              {datas?.status?.toUpperCase()}
+            </p>
           </div>
         </CardBody>
       </Card>

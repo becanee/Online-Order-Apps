@@ -30,6 +30,44 @@ const Index = () => {
     setLoading(false);
   };
 
+  const handleProductStatus = async ({ product_id, status }: any) => {
+    let formData: any = new FormData();
+
+    formData.append("product_id", product_id);
+    formData.append("status", status ? status : "pending");
+
+    const response: any = await axios.post(
+      `${baseAPIUrl}/api/product/add`,
+      formData
+    );
+
+    if (response?.data?.status) {
+      toast.success(`Save Product Successfully`, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } else {
+      toast.error(response?.data?.message, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    setLoading(false);
+  };
 
   const getProductByMrcID = async (mrc_id: string) => {
     setLoading(true);
@@ -55,7 +93,6 @@ const Index = () => {
     setLoading(false);
   };
 
-
   useEffect(() => {
     if (userdatas?.length === 0) {
       getUsersByRole("merchant");
@@ -66,6 +103,7 @@ const Index = () => {
     getUsersByRole,
     getProductByMrcID,
     setLoading,
+    handleProductStatus,
     loading,
     userdatas,
     productdata,
